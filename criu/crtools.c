@@ -318,6 +318,16 @@ int main(int argc, char *argv[], char *envp[])
 		 * corresponding lib call change.
 		 */
 		opts.swrk_restore = true;
+		opts.output = "/log/server.log";
+		
+		log_level = 4;
+		log_set_loglevel(log_level);
+
+		if (log_init(opts.output))
+			return 1;
+		libsoccr_set_log(log_level, print_on_level);
+		compel_log_init(vprint_on_level, log_get_loglevel());
+
 		return cr_service_work(atoi(argv[2]));
 	}
 

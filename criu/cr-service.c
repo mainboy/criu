@@ -676,26 +676,7 @@ out:
 
 static int pre_dump_loop(int sk, CriuReq *msg)
 {
-	int ret;
-
-	do {
-		ret = pre_dump_using_req(sk, msg->opts);
-		if (ret < 0)
-			return ret;
-
-		criu_req__free_unpacked(msg, NULL);
-		if (recv_criu_msg(sk, &msg) == -1) {
-			pr_perror("Can't recv request");
-			return -1;
-		}
-	} while (msg->type == CRIU_REQ_TYPE__PRE_DUMP);
-
-	if (msg->type != CRIU_REQ_TYPE__DUMP) {
-		send_criu_err(sk, "Bad req seq");
-		return -1;
-	}
-
-	return dump_using_req(sk, msg->opts);
+	return pre_dump_using_req(sk, msg->opts);
 }
 
 struct ps_info {

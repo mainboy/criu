@@ -34,6 +34,7 @@ install-lib: lib
 
 install-criu: criu
 	$(Q) $(MAKE) $(build)=criu install
+	cp criu/criu /usr/local/sbin/criu
 .PHONY: install-criu
 
 install-compel: $(compel-install-targets)
